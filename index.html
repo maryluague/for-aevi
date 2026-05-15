@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>for you ♡</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #0d0d0d;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+.container {
+  position: absolute;
+  width: 100%;
+  top: 40%;
+  transform: translateY(-50%);
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* TEXT */
+p {
+  font-size: 18px;
+  opacity: 0;
+  transition: 1s;
+}
+
+.show {
+  opacity: 1;
+}
+
+/* FADE OUT */
+.fade-out {
+  animation: fadeOut 1.5s forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* FINAL SCREEN */
+#finalScreen {
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 40%;
+  transform: translateY(-50%);
+}
+
+audio {
+  margin-top: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+/* Pokeball base style */
+/* Pokeball base style */
+.pokeball {
+  margin-top: 30px;
+  display: block;
+  width: 192px;
+  height: 192px;
+  background: radial-gradient(
+      white 16px,
+      black 17px 18px,
+      white 19px 24px,
+      black 25px 32px,
+      transparent 33px
+    ),
+    linear-gradient(to bottom, red 0 80px, black 81px 96px, white 97px 100%);
+  border-radius: 50%;
+  border: 8px solid black;
+  box-shadow: inset -16px -8px 0 0 rgba(0, 0, 0, 0.2);
+  /* Always wiggle (shake) like a pokeball */
+  animation: fall 0.5s ease-in-out 1s,
+             shake 1.25s cubic-bezier(0.36, 0.07, 0.19, 0.97) 1.5s infinite,
+             catch 0.5s ease-out 5.25s forwards;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+/* Show pokeball when ready */
+.pokeball.show {
+  opacity: 1;
+}
+
+/* Stop animation when clicked */
+/* Stop only the shake animation when clicked */
+.pokeball.stopped {
+  animation-play-state: paused, paused, paused !important;
+}
+
+@keyframes moveLR {
+  0% {
+    transform: translateX(-60px);
+  }
+  100% {
+    transform: translateX(60px);
+  }
+}
+/* Animation */
+@keyframes shake {
+  0% {
+    transform: translateX(0) rotate(0);
+  }
+  20% {
+    transform: translateX(-10px) rotate(-20deg);
+  }
+  30% {
+    transform: translateX(10px) rotate(20deg);
+  }
+  50% {
+    transform: translateX(-10px) rotate(-10deg);
+  }
+  60% {
+    transform: translateX(10px) rotate(10deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+}
+@keyframes fall {
+  0% {
+    transform: translateY(-200%);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes catch {
+  to {
+    filter: saturate(0.8) brightness(0.8);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MAIN FLOW -->
+<div class="container" id="main">
+  <p id="text1">happy birthday.</p>
+  <p id="text2">i made something small for you.</p>
+  <p id="text3">i'm not always good with words...</p>
+  <p id="text4">but i hope you feel this one.</p>
+
+  <!-- YOUR CUSTOM POKEBALL -->
+  <div class="pokeball" id="ball" onclick="openFinal()"></div>
+  <p id="hint">tap the pokéball</p>
+</div>
+
+<!-- FINAL SONG SCREEN -->
+<div id="finalScreen">
+  <p class="show">this is for you ♡</p>
+  <audio controls autoplay>
+    <source src="Magnets.m4a" type="audio/mp4">
+  </audio>
+</div>
+
+<script>
+let delay = 1000;
+
+function show(id, time) {
+  setTimeout(() => {
+    document.getElementById(id).classList.add("show");
+  }, time);
+}
+
+// TEXT SEQUENCE
+show("text1", delay);
+show("text2", delay += 2000);
+show("text3", delay += 2000);
+show("text4", delay += 2000);
+
+// SHOW POKEBALL LAST
+setTimeout(() => {
+  document.getElementById("ball").classList.add("show");
+  document.getElementById("hint").classList.add("show");
+}, delay += 2000);
+
+// FINAL CLICK
+function openFinal() {
+  // Stop pokeball movement
+  document.getElementById("ball").classList.add("stopped");
+  document.getElementById("main").classList.add("fade-out");
+
+  setTimeout(() => {
+    document.getElementById("main").style.display = "none";
+    document.getElementById("finalScreen").style.display = "block";
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
